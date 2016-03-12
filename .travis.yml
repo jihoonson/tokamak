@@ -1,3 +1,9 @@
 language: rust
 rust:
   - nightly
+
+addons:
+  apt:
+    packages:
+    - llvm-3.7
+    - clang-3.7
