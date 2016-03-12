@@ -1,10 +1,20 @@
 language: rust
+sudo: required
+dist: trusty
 rust:
   - nightly
 
 before_install:
-  - sudo sh -c "echo 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.7 main' >> /etc/apt/sources.list"
-  - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
+  - echo 'deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.7 main' | sudo tee -a /etc/apt/sources.list
+  - echo 'deb-src http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.7 main' | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update
-  - sudo apt-get install llvm-3.7
-  - sudo apt-get install clang-3.7
+  - sudo apt-get --force-yes install curl make g++ python2.7 git zlib1g-dev libedit-dev llvm-3.7-tools clang-3.7
+#  - sudo sh -c "echo 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.7 main' >> /etc/apt/sources.list"
+#  - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
+#  - sudo apt-get update
+#  - sudo apt-get install llvm-3.7
+#  - sudo apt-get install clang-3.7
+
+branches:
+  only:
+    - master
