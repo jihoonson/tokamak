@@ -1,19 +1,37 @@
 language: rust
-sudo: required
-dist: trusty
+addons:
+  apt:
+    sources:
+      - llvm-toolchain-precise-3.7
+    packages:
+      - libclang-3.7-dev
+      - llvm-3.7-dev
+env:
+  - LLVM_VERSION=3.7
 rust:
   - nightly
+matrix:
+  include:
+    - ox: osx
+      env: LLVM_VERSION=3.7
 
 before_install:
-  - echo 'deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.7 main' | sudo tee -a /etc/apt/sources.list
-  - echo 'deb-src http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.7 main' | sudo tee -a /etc/apt/sources.list
-  - sudo apt-get update
-  - sudo apt-get --force-yes install curl make g++ python2.7 git zlib1g-dev libedit-dev llvm-3.7-tools clang-3.7
-#  - sudo sh -c "echo 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.7 main' >> /etc/apt/sources.list"
-#  - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
-#  - sudo apt-get update
-#  - sudo apt-get install llvm-3.7
-#  - sudo apt-get install clang-3.7
+  -
+    if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+      if [ "${LLVM_VERSION}" != "devtools" ]; then
+        brew update >/dev/null;
+        brew install llvm3${LLVM_VERSION#3.};
+      fi
+    fi
+
+before_script:
+  -
+    if [ "${TRAVIS_OS_NAME}" = "linux" ]; then
+      export LIBCLANG_PATH=/usr/lib/llvm-${LLVM_VERSION}/lib;
+    elif [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+      export LIBCLANG_PATH=`brew --prefix llvm3${LLVM_VERSION#3.}`/lib/llvm-${LLVM_VERSION}/lib;
+    fi
+  - echo $LIBCLANG_PATH
 
 branches:
   only:
