@@ -4,6 +4,16 @@ use std::process::Command;
 
 static IR_TARGET_PATH: &'static str = "target/ir";
 
+fn llvm_config(arg: &str) -> String {
+  let stdout = Command::new("llvm-config")
+    .arg(arg)
+    .output()
+    .unwrap_or_else(|e| panic!("Couldn't execute llvm-config. Error: {}", e))
+    .stdout;
+
+  String::from_utf8(stdout).ok().expect("llvm-config output was not UTF-8.")
+}
+
 // Prepare a directory
 fn prepare_dir(path: &str) {
   assert!(
@@ -64,6 +74,8 @@ fn main() {
   emit_llvm_ir("common_ir.cc", "common_ir.ll", "common_ir.bc");
 
   link_llvm_bc(&["page_ir.bc", "common_ir.bc"], "common.bc");
+
+  std::env::set_var("CC", llvm_config("--bindir").trim());
 
   gcc::Config::new()
     .cpp(true)
