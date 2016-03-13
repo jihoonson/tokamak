@@ -7,6 +7,7 @@ addons:
     packages:
       - libclang-3.7-dev
       - llvm-3.7-dev
+      - clang-3.7
 env:
   - LLVM_VERSION=3.7
 rust:
@@ -35,3 +36,7 @@ before_script:
   - export PATH=/usr/lib/llvm-${LLVM_VERSION}/bin:$PATH
   - export CC=/usr/bin/clang-${LLVM_VERSION}
   - export CXX=/usr/bin/clang++-${LLVM_VERSION}
+  - which cc
+  - which c++
+  - which clang
+  - which clang++
