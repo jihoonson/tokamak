@@ -34,8 +34,8 @@ before_script:
       export LIBCLANG_PATH=`brew --prefix llvm3${LLVM_VERSION#3.}`/lib/llvm-${LLVM_VERSION}/lib;
     fi
   - export PATH=/usr/lib/llvm-${LLVM_VERSION}/bin:$PATH
-  - export CC=/usr/bin/clang-${LLVM_VERSION}
-  - export CXX=/usr/bin/clang++-${LLVM_VERSION}
+  - export CC=/usr/lib/llvm-${LLVM_VERSION}/bin/clang
+  - export CXX=/usr/lib/llvm-${LLVM_VERSION}/bin/clang++
   - which cc
   - which c++
   - which clang
