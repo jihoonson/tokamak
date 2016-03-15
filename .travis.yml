@@ -37,7 +37,7 @@ before_script:
   - export PATH=/usr/lib/llvm-${LLVM_VERSION}/bin:$PATH
   - export CC=/usr/lib/llvm-${LLVM_VERSION}/bin/clang
   - export CXX=/usr/lib/llvm-${LLVM_VERSION}/bin/clang++
-#  - which cc
-#  - which c++
-#  - which clang
-#  - which clang++
+
+script:
+  cargo build --verbose
+  dev-support/run-all-tests.sh
