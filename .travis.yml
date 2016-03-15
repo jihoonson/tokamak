@@ -39,5 +39,5 @@ before_script:
   - export CXX=/usr/lib/llvm-${LLVM_VERSION}/bin/clang++
 
 script:
-  cargo build --verbose
-  dev-support/run-all-tests.sh
+  - cargo build --verbose
+  - dev-support/run-all-tests.sh
