@@ -8,6 +8,7 @@ addons:
       - libclang-3.7-dev
       - llvm-3.7-dev
       - clang-3.7
+      - libedit-dev
 env:
   - LLVM_VERSION=3.7
 rust:
