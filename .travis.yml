@@ -15,7 +15,7 @@ rust:
   - nightly
 matrix:
   include:
-    - ox: osx
+    - os: osx
       env: LLVM_VERSION=3.7
 
 before_install:
